@@ -1,0 +1,23 @@
+terminal a:
+
+signal_A_inner = 15
+power_A_inner = 16
+
+signal_A_outer = 14
+power_A_outer = 17
+
+terminal b:
+
+signal_B_inner = 1
+power_B_inner = 0
+
+signal_B_outer = 19
+power_B_outer = 18
+
+terminal c:
+
+signal_C_inner = 9
+power_C_inner = 8
+
+signal_C_outer = 7
+power_C_outer = 6
