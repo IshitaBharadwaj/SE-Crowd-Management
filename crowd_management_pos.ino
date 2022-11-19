@@ -1,4 +1,5 @@
 #include <LiquidCrystal.h>
+//fixing boundary conditions fda
 int in_a =15;
 int inpr_a = 16;
 int out_a = 14;
@@ -55,6 +56,7 @@ void loop() {
   po_c = digitalRead(out_c);
   if (pi_a == 1){
     ppl_a--;
+    if(ppl_a <=0) { ppl_a = 0 ; Serial.println("Terminal A is empty ") ;}
     Serial.print("Current count for terminal A: ");
     Serial.println(ppl_a);
     delay(500);
@@ -89,6 +91,7 @@ void loop() {
   // counter for terminal b
   if (pi_b == 1){
     ppl_b--;
+    if(ppl_b <=0) { ppl_b = 0 ; Serial.println("Terminal B is empty ") ;}
     Serial.print("Current count for terminal B: ");
     Serial.println(ppl_b);
     delay(500);
@@ -99,7 +102,6 @@ void loop() {
     }
     else
     {
-     //hehehe
       Serial.println("please enter terminal B");
     }
     delay(1000);
@@ -123,6 +125,7 @@ void loop() {
   // counter for terminal c
   if (pi_c == 1){
     ppl_c--;
+    if(ppl_c <=0) { ppl_c = 0 ; Serial.println("Terminal C is empty ") ;}
     Serial.print("Current count for terminal C: ");
     Serial.println(ppl_c);
     delay(500);
@@ -156,6 +159,8 @@ void loop() {
 
   
   ppl_a = constrain(ppl_a, 0, 50);
+  ppl_b = constrain(ppl_b, 0, 50);
+  ppl_c = constrain(ppl_c, 0, 50);
   lcd.setCursor(0, 0);
   // lcd.print("PEOPLE IN:");
   lcd.setCursor(11, 0);
