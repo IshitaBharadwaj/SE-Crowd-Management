@@ -99,6 +99,7 @@ void loop() {
     }
     else
     {
+     //hehehe
       Serial.println("please enter terminal B");
     }
     delay(1000);
