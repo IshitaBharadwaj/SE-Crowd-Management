@@ -1,5 +1,6 @@
 #include <LiquidCrystal.h>
 
+
 int in_a = 15;
 int inpr_a = 16;
 int out_a = 14;
@@ -15,6 +16,7 @@ int outpr_c = 6;
 int ppl_a = 0;
 int ppl_b = 0;
 int ppl_c = 0;
+
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 bool pi_a = 0;
 bool po_a = 0;
