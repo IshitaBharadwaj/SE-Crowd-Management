@@ -17,7 +17,7 @@ int outpr_c = 6;  // assigning pin 6 to power_c_outer
 int ppl_a = 0;    
 int ppl_b=0;      
 int ppl_c=0;   
-
+int threshold = 10;
 // assigniing ardiono pins to the lcd display
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 
@@ -70,8 +70,8 @@ void loop()  // function which keeps running when the program starts
   pi_c = digitalRead(in_c);  // exit terminal c
   po_c = digitalRead(out_c); // enter terminal c
 
-
-  if ((ppl_a != 10 || ppl_b != 10)) // enter the if block if A and B can accomodate more customers
+  
+  if ((ppl_a != threshold || ppl_b != threshold)) // enter the if block if A and B can accomodate more customers
     {
 
         if ((po_a == 1 || po_b == 1))  // if user tries to enter A or B 
@@ -181,15 +181,47 @@ void loop()  // function which keeps running when the program starts
             delay(1000);
         }
 
-        if (po_c == 1)
+        if (po_c == 1 )
         {
-            Serial.println("Terminal C is closed");
+            if(ppl_c==0){
+                    Serial.println("Terminal C is closed");
             delay(1000);
+            }
+            if(ppl_c== threshold)
+            {
+                if(ppl_a<ppl_b)
+                {
+                    Serial.println("Please enter A");
+                    ppl_a++;
+                    Serial.print("Current count for terminal A: ");
+                    Serial.println(ppl_a);
+                    Serial.print("Current count for terminal B: ");
+                    Serial.println(ppl_b);
+                    Serial.print("Current count for terminal C: ");
+                    Serial.println(ppl_c);
+                    delay(1000);
+                }
+                else
+                {
+                    Serial.println("Please enter B");
+                    ppl_b++;
+                    Serial.print("Current count for terminal A: ");
+                    Serial.println(ppl_a);
+                    Serial.print("Current count for terminal B: ");
+                    Serial.println(ppl_b);
+                    Serial.print("Current count for terminal C: ");
+                    Serial.println(ppl_c);
+                    delay(1000);
+                }
+                    
+            }
+            
+            
         }
     }
     else // if both A and B cannot accomodate more cutomers then we open terminal C and activate the C counter(i.e sensors of terminal C)
     {
-        if ((po_a == 1 || po_b == 1) && ppl_c < 10 && ppl_c >= 0)//This condition takes care of the condition where people are trying to enter terminal A and B as there are full we redirect them to terminal C
+        if ((po_a == 1 || po_b == 1) && ppl_c < threshold && ppl_c >= 0)//This condition takes care of the condition where people are trying to enter terminal A and B as there are full we redirect them to terminal C
         {
             if (ppl_c == 0)//opening terminal C when no people are present in terminal C
                 Serial.println("opening terminal C ");
@@ -205,7 +237,7 @@ void loop()  // function which keeps running when the program starts
             Serial.print("Current count for terminal C: ");
             Serial.println(ppl_c);
         }
-        else if (ppl_c != 0 && ppl_c != 10 && po_c == 1) //Trying to enter C and when terminal C is already open we just increment the counter for C
+        else if (ppl_c != 0 && ppl_c != threshold && po_c == 1) //Trying to enter C and when terminal C is already open we just increment the counter for C
         {
             Serial.println("Enter terminal C");
             ppl_c++; //Incrementing counter for terminal C
